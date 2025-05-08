@@ -6,7 +6,7 @@
 /*   By: tafocked <tafocked@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:27:35 by tafocked          #+#    #+#             */
-/*   Updated: 2025/05/07 21:12:09 by tafocked         ###   ########.fr       */
+/*   Updated: 2025/05/08 17:39:05 by tafocked         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ ScalarConverter &ScalarConverter::operator=(const ScalarConverter &copy)
 
 void ScalarConverter::convert(const std::string &str)
 {
+	std::cout << std::fixed << std::setprecision(1);
 	size_t dot = str.find('.');
 	size_t f = str.find('f');
+
 	if (dot == std::string::npos)
 	{
 		if (isSpecial(str))
@@ -71,9 +73,8 @@ void ScalarConverter::convert(const std::string &str)
 			return;
 		}
 	}
-	printInvalid(str);
+	printInvalid();
 }
-
 
 bool isSpecial(const std::string &str)
 {
@@ -92,23 +93,28 @@ bool isChar(const std::string &str)
 bool isInt(const std::string &str)
 {
 	int i = 0;
+	int j = 0;
 
 	if (str[i] == '+' || str[i] == '-')
 		i++;
-	while (str[i])
-	{
-		if (!isdigit(str[i]))
-			return (false);
+	while (str[i] == '0')
 		i++;
+	while (str[i + j])
+	{
+		if (!isdigit(str[i + j]))
+			return (false);
+		j++;
 	}
+	if (j > 10)
+		return (false);
 	return (true);
 }
 
 bool isFloat(const std::string &str)
 {
-	int i = 0;
-	int dot = str.find('.');
-	int f = str.find('f');
+	size_t i = 0;
+	size_t dot = str.find('.');
+	size_t f = str.find('f');
 
 	if (str[i] == '+' || str[i] == '-')
 		i++;
@@ -119,11 +125,30 @@ bool isFloat(const std::string &str)
 		i++;
 	}
 	i = dot + 1;
-	while (i < f)
+	if (f == std::string::npos)
 	{
-		if (!isdigit(str[i]))
+		while (str[i])
+		{
+			if (!isdigit(str[i]))
 			return (false);
-		i++;
+			i++;
+		}
+	}
+	else
+	{
+		while (i < f)
+		{
+			if (!isdigit(str[i]))
+			return (false);
+			i++;
+		}
+		i = f + 1;
+		while (str[i])
+		{
+			if (!isdigit(str[i]))
+				return (false);
+			i++;
+		}
 	}
 	return (true);
 }
@@ -157,35 +182,83 @@ void printChar(const std::string &str)
 {
 	char c = str[0];
 
-	if (isprint(str[0]))
+	if (!isprint(c))
 	{
-		std::cout << "Char:\t'" << c << "'\n";
-		std::cout << "Int:\t" << static_cast<int>(c) << "\n";
-		std::cout << "Float:\t" << static_cast<float>(c) << ".0f\n";
-		std::cout << "Double:\t" << static_cast<double>(c) << ".0\n";
+		std::cout << "Non displayable\n";
 	}
 	else
 	{
-		std::cout << "Non displayable\n";
+		std::cout << "Char:\t'" << c << "'\n";
+		std::cout << "Int:\t" << static_cast<int>(c) << "\n";
+		std::cout << "Float:\t" << static_cast<float>(c) << "f\n";
+		std::cout << "Double:\t" << static_cast<double>(c) << "\n";
 	}
 }
 
 void printInt(const std::string &str)
 {
-	(void)str;
+	long int nb = atol(str.c_str());
+
+	if (nb < std::numeric_limits<int>::min() || nb > std::numeric_limits<int>::max())
+		std::cout << "Non displayable\n";
+	else
+	{
+		if ( nb < std::numeric_limits<char>::min() || nb > std::numeric_limits<char>::max() || !isprint(nb))
+			std::cout << "Char:\tNon displayable\n";
+		else
+			std::cout << "Char:\t'" << static_cast<char>(nb) << "'\n";
+		std::cout << "Int:\t" << nb << "\n";
+		std::cout << "Float:\t" << static_cast<float>(nb) << "f\n";
+		std::cout << "Double:\t" << static_cast<double>(nb) << "\n";
+	}
 }
 
 void printFloat(const std::string &str)
 {
-	(void)str;
+	float nb = atof(str.c_str());
+	
+	if (nb > std::numeric_limits<float>::max())
+		std::cout << "Non displayable\n";
+	else
+	{
+		if ( nb < 0 || nb > 127 || !isprint(nb))
+			std::cout << "Char:\tNon displayable\n";
+		else
+			std::cout << "Char:\t'" << static_cast<char>(nb) << "'\n";
+		if (nb < std::numeric_limits<int>::min() || nb > std::numeric_limits<int>::max())
+			std::cout << "Int:\tNon displayable\n";
+		else
+			std::cout << "Int:\t" << static_cast<int>(nb) << "\n";
+		std::cout << "Float:\t" << nb << "f\n";
+		std::cout << "Double:\t" << nb << "\n";
+	}
 }
 
 void printDouble(const std::string &str)
 {
-	(void)str;
+	double nb = atof(str.c_str());
+	
+	if (nb > std::numeric_limits<double>::max())
+		std::cout << "Non displayable\n";
+	else
+	{
+		if ( nb < 0 || nb > 127 || !isprint(nb))
+			std::cout << "Char:\tNon displayable\n";
+		else
+			std::cout << "Char:\t'" << static_cast<char>(nb) << "'\n";
+		if (nb < std::numeric_limits<int>::min() || nb > std::numeric_limits<int>::max())
+			std::cout << "Int:\tNon displayable\n";
+		else
+			std::cout << "Int:\t" << static_cast<int>(nb) << "\n";
+		if (nb > std::numeric_limits<float>::max())
+			std::cout << "Float:\t Non displayable\n";
+		else
+			std::cout << "Float:\t" << nb << "f\n";
+		std::cout << "Double:\t" << nb << "\n";
+	}
 }
 
-void printInvalid(const std::string &str)
+void printInvalid()
 {
-	(void)str;
+	std::cout << "Non displayable\n";
 }

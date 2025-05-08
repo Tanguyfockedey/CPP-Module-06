@@ -6,12 +6,14 @@
 /*   By: tafocked <tafocked@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:27:45 by tafocked          #+#    #+#             */
-/*   Updated: 2025/05/07 21:04:39 by tafocked         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:56:03 by tafocked         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
+#include <limits>
 
 class ScalarConverter
 {
@@ -39,4 +41,4 @@ void printChar(const std::string &str);
 void printInt(const std::string &str);
 void printFloat(const std::string &str);
 void printDouble(const std::string &str);
-void printInvalid(const std::string &str);
+void printInvalid();

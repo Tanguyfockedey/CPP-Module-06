@@ -6,11 +6,11 @@
 #    By: tafocked <tafocked@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/20 16:37:10 by tafocked          #+#    #+#              #
-#    Updated: 2025/05/07 19:31:26 by tafocked         ###   ########.fr        #
+#    Updated: 2025/05/08 16:39:21 by tafocked         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= run
+NAME	= convert
 
 FILES	= main.cpp \
 			ScalarConverter.cpp \
