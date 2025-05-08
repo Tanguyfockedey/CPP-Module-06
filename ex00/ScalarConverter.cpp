@@ -6,7 +6,7 @@
 /*   By: tafocked <tafocked@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:27:35 by tafocked          #+#    #+#             */
-/*   Updated: 2025/05/08 17:39:05 by tafocked         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:12:41 by tafocked         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,46 +216,34 @@ void printInt(const std::string &str)
 void printFloat(const std::string &str)
 {
 	float nb = atof(str.c_str());
-	
-	if (nb > std::numeric_limits<float>::max())
-		std::cout << "Non displayable\n";
+
+	if ( nb < 0 || nb > 127 || !isprint(nb))
+		std::cout << "Char:\tNon displayable\n";
 	else
-	{
-		if ( nb < 0 || nb > 127 || !isprint(nb))
-			std::cout << "Char:\tNon displayable\n";
-		else
-			std::cout << "Char:\t'" << static_cast<char>(nb) << "'\n";
-		if (nb < std::numeric_limits<int>::min() || nb > std::numeric_limits<int>::max())
-			std::cout << "Int:\tNon displayable\n";
-		else
-			std::cout << "Int:\t" << static_cast<int>(nb) << "\n";
-		std::cout << "Float:\t" << nb << "f\n";
-		std::cout << "Double:\t" << nb << "\n";
-	}
+		std::cout << "Char:\t'" << static_cast<char>(nb) << "'\n";
+	if (nb < std::numeric_limits<int>::min() || nb > std::numeric_limits<int>::max())
+		std::cout << "Int:\tNon displayable\n";
+	else
+		std::cout << "Int:\t" << static_cast<int>(nb) << "\n";
+	std::cout << "Float:\t" << nb << "f\n";
+	std::cout << "Double:\t" << static_cast<double>(nb) << "\n";
 }
 
 void printDouble(const std::string &str)
 {
 	double nb = atof(str.c_str());
 	
-	if (nb > std::numeric_limits<double>::max())
-		std::cout << "Non displayable\n";
+	if ( nb < 0 || nb > 127 || !isprint(nb))
+		std::cout << "Char:\tNon displayable\n";
 	else
-	{
-		if ( nb < 0 || nb > 127 || !isprint(nb))
-			std::cout << "Char:\tNon displayable\n";
-		else
-			std::cout << "Char:\t'" << static_cast<char>(nb) << "'\n";
-		if (nb < std::numeric_limits<int>::min() || nb > std::numeric_limits<int>::max())
-			std::cout << "Int:\tNon displayable\n";
-		else
-			std::cout << "Int:\t" << static_cast<int>(nb) << "\n";
-		if (nb > std::numeric_limits<float>::max())
-			std::cout << "Float:\t Non displayable\n";
-		else
-			std::cout << "Float:\t" << nb << "f\n";
-		std::cout << "Double:\t" << nb << "\n";
-	}
+		std::cout << "Char:\t'" << static_cast<char>(nb) << "'\n";
+	if (nb < std::numeric_limits<int>::min() || nb > std::numeric_limits<int>::max())
+		std::cout << "Int:\tNon displayable\n";
+	else
+		std::cout << "Int:\t" << static_cast<int>(nb) << "\n";
+	std::cout << "Float:\t" << static_cast<float>(nb) << "f\n";
+	std::cout << "Double:\t" << nb << "\n";
+
 }
 
 void printInvalid()
